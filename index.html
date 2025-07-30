@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Yara's Finance Tracker</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+  <div class="container">
+    <h1>Catatan Keuangan Pribadi</h1>
+    
+    <div class="tabs">
+      <button class="tab-button active" data-tab="transactions">Transaksi</button>
+      <button class="tab-button" data-tab="budgets">Budget Bulanan</button>
+      <button class="tab-button" data-tab="summary">Ringkasan</button>
+    </div>
+    
+    <!-- Transactions Tab -->
+    <div id="transactions" class="tab-content active">
+      <h2>Catatan Harian</h2>
+      <form id="transaction-form">
+        <input type="hidden" id="edit-transaction-id" value="">
+        <div class="form-row">
+          <div class="form-group">
+            <label for="date">Tanggal:</label>
+            <input type="date" id="date" required>
+          </div>
+          <div class="form-group">
+            <label for="category">Kategori:</label>
+            <select id="category" required>
+              <option value="">Pilih Kategori</option>
+              <option value="Uang Bulanan">Uang Bulanan</option>
+              <option value="Kebutuhan Pokok">Kebutuhan Pokok</option>
+              <option value="Jajan">Jajan</option>
+              <option value="Tambahan">Tambahan</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="description">Keterangan:</label>
+            <input type="text" id="description" required>
+          </div>
+          <div class="form-group">
+            <label for="type">Jenis:</label>
+            <select id="type" required>
+              <option value="">Pilih Jenis</option>
+              <option value="income">Pemasukan</option>
+              <option value="expense">Pengeluaran</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="amount">Jumlah (Rp):</label>
+          <input type="number" id="amount" min="0" required>
+        </div>
+        <div class="form-actions">
+          <button type="submit" id="save-transaction">Simpan</button>
+          <button type="button" id="cancel-edit" style="display: none;">Batal</button>
+        </div>
+      </form>
+      
+      <h3>Daftar Transaksi</h3>
+      <div class="table-container">
+        <table id="transactions-table">
+          <thead>
+            <tr>
+              <th>Tanggal</th>
+              <th>Kategori</th>
+              <th>Keterangan</th>
+              <th>Jumlah</th>
+              <th>Aksi</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+      <div class="print-actions">
+        <button id="print-transactions" class="print-btn">
+          <i class="fas fa-print"></i> Cetak Daftar Transaksi
+        </button>
+      </div>
+    </div>
+    
+    <!-- Budgets Tab -->
+    <div id="budgets" class="tab-content">
+      <h2>Kebutuhan Bulanan</h2>
+      <div class="table-container">
+        <table id="budgets-table">
+          <thead>
+            <tr>
+              <th>No</th>
+              <th>Kategori</th>
+              <th>Nama Kebutuhan</th>
+              <th>Estimasi Biaya</th>
+              <th>Keterangan</th>
+              <th>Aksi</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+          <tfoot>
+            <tr>
+              <td colspan="3" class="total-label">Total Estimasi Biaya:</td>
+              <td id="total-estimate" class="total-amount">Rp 0</td>
+              <td colspan="2"></td>
+            </tr>
+          </tfoot>
+        </table>
+      </div>
+    </div>
+    
+    <!-- Summary Tab -->
+    <div id="summary" class="tab-content">
+      <h2>Ringkasan Keuangan</h2>
+      <div class="summary-cards">
+        <div class="card">
+          <h3>Total Pemasukan</h3>
+          <p id="total-income">Rp 0</p>
+        </div>
+        <div class="card">
+          <h3>Total Pengeluaran</h3>
+          <p id="total-expense">Rp 0</p>
+        </div>
+        <div class="card">
+          <h3>Saldo</h3>
+          <p id="balance">Rp 0</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.28/jspdf.plugin.autotable.min.js"></script>
+   <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-database-compat.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
